@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .idea/
 mvnw.*
+mvnw
 .mvn
 
 ### STS ###
