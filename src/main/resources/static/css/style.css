@@ -1,0 +1,19 @@
+body {
+    background-color: #0F0F0F !important;
+    color: white !important;
+}
+
+.darker {
+    background-color: #1F1F1F !important;
+}
+.darker-1 {
+    background-color: #0A0A0A !important;
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+
+
+
