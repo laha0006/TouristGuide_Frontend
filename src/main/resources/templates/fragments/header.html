@@ -5,6 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-
+<header th:fragment="header" class="d-flex justify-content-center py-3 darker mb-3 mt-2">
+    <nav>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a th:href="@{/attractions}"
+                                    th:classappend="${activeLink == 'attractions' ? 'border border-white bold':''}"
+                                    th:attrappend="aria-current=${activeLink == 'attractions' ? 'page' : 'false'}"
+                                    class="nav-link">Attractions</a></li>
+            <li class="nav-item"><a th:href="@{/attractions/add}"
+                                    th:classappend="${activeLink == 'add' ? 'border border-white bold':''}"
+                                    th:attrappend="aria-current=${activeLink == 'add' ? 'page' : 'false'}"
+                                    class="nav-link">Add Attraction</a></li>
+<!--            <li class="nav-item"><a th:href="" class="nav-link">Pricing</a></li>-->
+<!--            <li class="nav-item"><a th:href="" class="nav-link">FAQs</a></li>-->
+<!--            <li class="nav-item"><a th:href="" class="nav-link">About</a></li>-->
+        </ul>
+    </nav>
+</header>
 </body>
 </html>
