@@ -8,7 +8,7 @@ public class TouristAttraction {
     private String description;
     private City city;
 
-    private final List<Tag> tags;
+    private List<Tag> tags;
 
     public TouristAttraction() {
         tags = new ArrayList<>();
@@ -39,6 +39,10 @@ public class TouristAttraction {
 
     public List<Tag> getTags() {
         return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public City getCity() {
