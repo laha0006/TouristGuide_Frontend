@@ -1,5 +1,7 @@
 package dev.tolana.touristguide_frontend.service;
 
+import dev.tolana.touristguide_frontend.model.City;
+import dev.tolana.touristguide_frontend.model.Tag;
 import dev.tolana.touristguide_frontend.model.TouristAttraction;
 import dev.tolana.touristguide_frontend.repository.TouristAttractionRepository;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,17 @@ public class TouristAttractionService {
 
     public TouristAttraction deleteAttraction(String name) {
         return repository.deleteAttraction(name);
+    }
+
+    public List<Tag> getTagsByName(String name) {
+        return repository.getTagsByName(name);
+    }
+
+    public List<Tag> getTags() {
+        return repository.getTags();
+    }
+
+    public List<City> getCities() {
+        return repository.getCities();
     }
 }
