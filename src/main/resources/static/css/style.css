@@ -19,14 +19,28 @@ body {
 }
 
 
+.my-active {
+    background-color: darkslategrey !important;
+    color: white !important;
+}
 
-
-
+.nav-link-color {
+    color: white !important;
+}
 
 /*bootstrap form overrides*/
 .input-dark {
     background-color: #1F1F1F !important;
     color: #999999 !important;
+}
+
+.check-input-dark {
+    background-color: #1F1F1F !important;
+    color: limegreen !important;
+}
+
+.my-check {
+    width: 200px !important;
 }
 
 .form-group > input{
@@ -58,7 +72,8 @@ body {
 
 .search > input:focus {
     background-color: #212529 !important;
-    color: #999999 !important;
+    /*color: #999999 !important;*/
+    color: white !important;
 }
 
 .search > input::placeholder{
