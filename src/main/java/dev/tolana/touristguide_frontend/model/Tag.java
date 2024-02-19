@@ -7,13 +7,20 @@ public enum Tag {
     FAMILY_FRIENDLY("Family Friendly"),
     HISTORICAL("Historical"),
     RELIGION("Religion"),
-    AMUSEMENT_PARK("Amusement Park");
-
+    AMUSEMENT_PARK("Amusement Park"),
+    FOOD("Food"),
+    FINE_DINING("Fine Dining"),
+    NATURE("Nature"),
+    ACTIVE("Active");
 
 
     private final String name;
 
     Tag(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
