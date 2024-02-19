@@ -1,5 +1,7 @@
 package dev.tolana.touristguide_frontend.repository;
 
+import dev.tolana.touristguide_frontend.model.City;
+import dev.tolana.touristguide_frontend.model.Tag;
 import dev.tolana.touristguide_frontend.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +15,12 @@ public class TouristAttractionRepository {
     public TouristAttractionRepository() {
         attractionList = new ArrayList<>();
         attractionList.add(new TouristAttraction("DenLilleFede",
-                "Fine dining når det er bedst."));
-        attractionList.add(new TouristAttraction("McD","Best coffee after Wine Course"));
+                "Fine dining når det er bedst.",
+                City.COPENHAGEN,
+                List.of(Tag.PAID)));
+        attractionList.add(new TouristAttraction("McD","Best coffee after Wine Course",
+                City.COPENHAGEN,
+                List.of(Tag.PAID,Tag.FAMILY_FRIENDLY)));
 
     }
 
@@ -54,5 +60,22 @@ public class TouristAttractionRepository {
             }
         }
         return null;
+    }
+
+    public List<Tag> getTagsByName(String name) {
+        for(TouristAttraction attraction : attractionList) {
+            if(attraction.getName().equalsIgnoreCase(name)) {
+                return attraction.getTags();
+            }
+        }
+        return null;
+    }
+
+    public List<Tag> getTags() {
+        return new ArrayList<>(List.of(Tag.values()));
+    }
+
+    public List<City> getCities() {
+        return new ArrayList<>(List.of(City.values()));
     }
 }
