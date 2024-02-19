@@ -32,6 +32,7 @@ public class TouristAttractionController {
     public String getTagsForAttraction(@PathVariable String name, Model model) {
         List<Tag> tags = touristAttractionService.getTagsByName(name);
         model.addAttribute("tags", tags);
+        model.addAttribute("name", name);
         return "attractionTags";
     }
     @GetMapping("/add")
@@ -49,6 +50,8 @@ public class TouristAttractionController {
     @PostMapping("/save")
     public String save(@ModelAttribute TouristAttraction attraction) {
         System.out.println("Attraction: " + attraction);
+        System.out.println(attraction.getTags().size());
+        System.out.println(attraction.getTags());
         touristAttractionService.addAttraction(attraction);
         return "redirect:/attractions";
     }
