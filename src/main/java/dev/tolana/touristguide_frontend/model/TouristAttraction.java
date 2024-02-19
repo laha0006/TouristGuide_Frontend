@@ -1,12 +1,24 @@
 package dev.tolana.touristguide_frontend.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TouristAttraction {
     private String name;
     private String description;
+    private City city;
 
-    public TouristAttraction(String name, String description) {
+    private final List<Tag> tags;
+
+    public TouristAttraction() {
+        tags = new ArrayList<>();
+    }
+
+    public TouristAttraction(String name, String description,City city, List<Tag> tags) {
         this.name = name;
         this.description = description;
+        this.city = city;
+        this.tags = tags;
     }
 
     public String getName() {
@@ -23,5 +35,17 @@ public class TouristAttraction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
