@@ -6,11 +6,14 @@
 <body>
 <div class="container">
     <header th:insert="fragments/header"></header>
-    <table class="table table-dark">
+    <table class="table table-dark"
+    data-toggle="table"
+    data-search="true">
         <thead>
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
+            <th scope="col">City</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -18,9 +21,10 @@
         <tr th:each="attraction : ${attractionList}">
             <td class="align-middle" th:text="${attraction.name}">Attraction Name</td>
             <td class="align-middle" th:text="${attraction.description}">Attraction Description</td>
-            <td><a class="btn btn-dark darker" th:href="@{attractions/{name}/tags(name = ${attraction.name} )}">tags</a>
-                <a class="btn btn-dark darker" th:href="@{attractions/{name}/delete(name = ${attraction.name} )}">delete</a>
-                <a class="btn btn-dark darker" th:href="@{attractions/{name}/edit(name = ${attraction.name} )}">delete</a>
+            <td class="align-middle" th:text="${attraction.getCity().name}">City</td>
+            <td><a class="btn my-border fw-bold btn-dark darker" th:href="@{attractions/{name}/tags(name = ${attraction.name} )}">tags</a>
+                <a class="btn my-border fw-bold btn-warning" th:href="@{attractions/{name}/edit(name = ${attraction.name} )}">update</a>
+                <a class="btn my-border fw-bold btn-danger" th:href="@{attractions/{name}/delete(name = ${attraction.name} )}">delete</a>
             </td>
         </tr>
         </tbody>
