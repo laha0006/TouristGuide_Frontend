@@ -1,12 +1,12 @@
 package dev.tolana.touristguide_frontend.controller;
 
+import dev.tolana.touristguide_frontend.model.City;
+import dev.tolana.touristguide_frontend.model.Tag;
 import dev.tolana.touristguide_frontend.model.TouristAttraction;
 import dev.tolana.touristguide_frontend.service.TouristAttractionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,16 +28,30 @@ public class TouristAttractionController {
         return "attractionList";
     }
 
-    //    @GetMapping("/{name}/tags")
+    @GetMapping("/{name}/tags")
+    public String getTagsForAttraction(@PathVariable String name, Model model) {
+        List<Tag> tags = touristAttractionService.getTagsByName(name);
+        model.addAttribute("tags", tags);
+        return "attractionTags";
+    }
     @GetMapping("/add")
     public String addAttraction(Model model) {
         model.addAttribute("activeLink", "add");
+        model.addAttribute("attraction", new TouristAttraction());
+        List<Tag> tags = touristAttractionService.getTags();
+        model.addAttribute("tags",tags);
+        List<City> cities = touristAttractionService.getCities();
+        model.addAttribute("cities",cities);
+
+
         return "addAttraction";
     }
-//    @PostMapping("/save")
-//    public String save() {
-//        return "redirect:/attractions";
-//    }
+    @PostMapping("/save")
+    public String save(@ModelAttribute TouristAttraction attraction) {
+        System.out.println("Attraction: " + attraction);
+        touristAttractionService.addAttraction(attraction);
+        return "redirect:/attractions";
+    }
 //
 //    @GetMapping("/{name}/edit")
 //    @PostMapping("/update")
