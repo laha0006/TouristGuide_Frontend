@@ -31,7 +31,7 @@ body {
 /*bootstrap form overrides*/
 .input-dark {
     background-color: #1F1F1F !important;
-    color: #999999 !important;
+    color: white !important;
 }
 
 .check-input-dark {
@@ -43,6 +43,10 @@ body {
     width: 200px !important;
 }
 
+.input-muted {
+    color: #999999 !important;
+}
+
 .form-group > input{
     background-color: #1F1F1F;
     color: #999999;
@@ -51,7 +55,8 @@ body {
 
 .form-group > input:focus {
     background-color: #1F1F1F !important;
-    color: #999999 !important;
+    /*color: #999999 !important;*/
+    color: white !important;
     border: 1px solid #4D5154 !important;
 }
 
