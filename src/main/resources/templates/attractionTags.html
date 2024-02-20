@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/head">
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head>
+    <title th:text="${name} + ' Tags'"></title>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
 </head>
 <body>
 <div class="container">
-    <header th:insert="fragments/header"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
     <div class="well bg-dark shadow-lg rounded">
         <h4 class="display-6 p-2" th:text="${name}"></h4>
