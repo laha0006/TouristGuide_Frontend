@@ -45,7 +45,9 @@ public class TouristAttractionRepository {
     public TouristAttraction updateAttraction(TouristAttraction attraction) {
         for(TouristAttraction ta : attractionList) {
             if(ta.getName().equalsIgnoreCase(attraction.getName())) {
+                ta.setCity(attraction.getCity());
                 ta.setDescription(attraction.getDescription());
+                ta.setTags(attraction.getTags());
                 return ta;
             }
         }
