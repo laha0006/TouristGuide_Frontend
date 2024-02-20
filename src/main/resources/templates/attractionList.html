@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/head">
-    <title>Title</title>
+<head>
+    <title>TouristGuide</title>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
 </head>
 <body>
 <div class="container">
-    <header th:insert="fragments/header"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
     <table class="table table-dark"
     data-toggle="table"
     data-search="true">
