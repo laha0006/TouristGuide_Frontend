@@ -11,7 +11,7 @@ public class TouristAttraction {
     private List<Tag> tags;
 
     public TouristAttraction() {
-        tags = new ArrayList<>();
+        //tags = new ArrayList<>();
     }
 
     public TouristAttraction(String name, String description,City city, List<Tag> tags) {
@@ -52,4 +52,13 @@ public class TouristAttraction {
     public void setCity(City city) {
         this.city = city;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof TouristAttraction touristAttraction)) return false;
+        if (name == null && touristAttraction.getName() == null ) return true;
+        return name.equals(touristAttraction.getName());
+    }
+
 }
