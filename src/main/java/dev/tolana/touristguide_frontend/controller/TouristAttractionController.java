@@ -49,9 +49,9 @@ public class TouristAttractionController {
     }
     @PostMapping("/save")
     public String save(@ModelAttribute TouristAttraction attraction) {
-        System.out.println("Attraction: " + attraction);
-        System.out.println(attraction.getTags().size());
-        System.out.println(attraction.getTags());
+//        System.out.println("Attraction: " + attraction);
+//        System.out.println(attraction.getTags().size());
+//        System.out.println(attraction.getTags());
         touristAttractionService.addAttraction(attraction);
         return "redirect:/attractions";
     }
