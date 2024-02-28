@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,6 +61,7 @@ public class TouristAttractionControllerTests {
     public void attractionTagEndpointTest() throws Exception {
         mockMvc.perform(get("/attractions/DenLilleFede/tags"))
                 .andExpect(status().isOk())
+                .andExpect(content().string(containsString("DenLilleFede")))
                 .andExpect(view().name("attractionTags"));
     }
 

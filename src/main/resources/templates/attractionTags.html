@@ -9,7 +9,7 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
     <div class="well bg-dark shadow-lg rounded">
-        <h4 class="display-6 p-2" th:text="${name}"></h4>
+        <h4 class="display-6 p-2" th:text="${name + ' tags'}"></h4>
         <table class="table table-dark">
             <tr th:each="tag : ${tags}">
                 <td class="align-middle" th:text="${tag.name}"></td>
