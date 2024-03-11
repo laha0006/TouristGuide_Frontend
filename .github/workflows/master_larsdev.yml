@@ -12,10 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      URL: ${{ secrets.URL }}
-      USER: ${{ secrets.USER }}
-      PWD: helloworld
     steps:
       - uses: actions/checkout@v4
 
@@ -25,6 +21,10 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
+        env:
+          URL: ${{ secrets.URL }}
+          USER: ${{ secrets.USER }}
+          PWD: helloworld
         run: mvn clean install
 
       - name: Upload artifact for deployment job
