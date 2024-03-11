@@ -12,12 +12,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
+    env:
       URL: ${{ secrets.URL }}
       USER: ${{ secrets.USER }}
       PWD: ${{ secrets.PWD }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
@@ -25,6 +26,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
