@@ -22,9 +22,9 @@ jobs:
 
       - name: Build with Maven
         env:
-          URL: ${{ secrets.URL }}
-          USER: ${{ secrets.USER }}
-          PWD: "helloworld"
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PWD: ${{ secrets.DB_PWD }}
         run: mvn clean install
 
       - name: Upload artifact for deployment job
