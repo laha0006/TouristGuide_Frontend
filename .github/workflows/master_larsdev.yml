@@ -15,7 +15,7 @@ jobs:
     env:
       URL: ${{ secrets.URL }}
       USER: ${{ secrets.USER }}
-      PWD: ${{ secrets.PWD }}
+      PWD: "${{ secrets.PWD }}"
     steps:
       - uses: actions/checkout@v4
 
