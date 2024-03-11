@@ -1,11 +1,7 @@
 package dev.tolana.touristguide_frontend.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +17,6 @@ import java.util.Map;
 public class DBTestController {
     private JdbcTemplate jdbcTemplate;
 
-    Logger logger = LoggerFactory.getLogger(DBTestController.class);
-
-    @Value("${spring.datasource.username}")
-    private String user;
-
-    @Value("${spring.datasource.password}")
-    private String pwd;
-
-    @Value("${spring.datasource.url}")
-    private String url;
-
     public DBTestController(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -43,9 +28,6 @@ public class DBTestController {
 
     @GetMapping("")
     public String test(Model model) {
-        logger.info(url);
-        logger.info(user);
-        logger.info(pwd);
         model.addAttribute("employees",getEmployees());
         return "test";
     }
