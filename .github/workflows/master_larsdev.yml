@@ -24,7 +24,7 @@ jobs:
         env:
           URL: ${{ secrets.URL }}
           USER: ${{ secrets.USER }}
-          PWD: helloworld
+          PWD: "helloworld"
         run: mvn clean install
 
       - name: Upload artifact for deployment job
