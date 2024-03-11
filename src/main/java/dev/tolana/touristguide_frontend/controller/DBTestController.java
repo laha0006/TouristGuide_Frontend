@@ -17,6 +17,15 @@ import java.util.Map;
 public class DBTestController {
     private JdbcTemplate jdbcTemplate;
 
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Value("${spring.datasource.username}")
+    private String user;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
     public DBTestController(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -30,6 +39,14 @@ public class DBTestController {
     public String test(Model model) {
         model.addAttribute("employees",getEmployees());
         return "test";
+    }
+
+    @GetMapping("/debug")
+    public String debug(Model model) {
+        model.addAttribute("url",url);
+        model.addAttribute("user",user);
+        model.addAttribute("password",password);
+        return "debug";
     }
 
 
