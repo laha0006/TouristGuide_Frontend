@@ -25,6 +25,9 @@ public class DBTestController {
 
     @Value("${spring.datasource.password}")
     private String password;
+//
+//    @Value("${mydb.test}")
+//    private String mydbTest;
 
     public DBTestController(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -46,6 +49,7 @@ public class DBTestController {
         model.addAttribute("url",url);
         model.addAttribute("user",user);
         model.addAttribute("password",password);
+//        model.addAttribute("mydb",mydbTest);
         return "debug";
     }
 
