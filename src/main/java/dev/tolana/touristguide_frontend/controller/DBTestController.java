@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 
 @Controller
@@ -33,9 +36,23 @@ public class DBTestController {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    private List<Map<String, Object>> getEmployees() {
-        List<Map<String, Object>> employees = jdbcTemplate.queryForList("SELECT * FROM emp");
+    private List<String> getEmployees() {
+//        List<Map<String, Object>> employees = jdbcTemplate.queryForList("SELECT * FROM emp");
+//        return employees;
+        List<String> employees = new ArrayList<>();
+        String SQL = "SELECT ename FROM emp";
+
+        try(Connection con = DriverManager.getConnection(url,user,password)) {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+            while(rs.next()) {
+                employees.add(rs.getString("ename"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return employees;
+
     }
 
     @GetMapping("")
