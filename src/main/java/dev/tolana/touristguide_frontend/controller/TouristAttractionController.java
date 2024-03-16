@@ -1,8 +1,8 @@
 package dev.tolana.touristguide_frontend.controller;
 
-import dev.tolana.touristguide_frontend.model.City;
-import dev.tolana.touristguide_frontend.model.Tag;
-import dev.tolana.touristguide_frontend.model.TouristAttraction;
+import dev.tolana.touristguide_frontend.dto.CityDTO;
+import dev.tolana.touristguide_frontend.dto.TagDTO;
+import dev.tolana.touristguide_frontend.dto.TouristAttractionDTO;
 import dev.tolana.touristguide_frontend.service.TouristAttractionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,8 @@ public class TouristAttractionController {
 
     @GetMapping()
     public String attractions(Model model) {
-        List<TouristAttraction> attractionList = touristAttractionService.getAll();
+        List<TouristAttractionDTO> attractionList = touristAttractionService.getAll();
+        System.out.println(attractionList);
         model.addAttribute("attractionList", attractionList);
         model.addAttribute("activeLink", "attractions");
         return "attractionList";
@@ -30,51 +31,57 @@ public class TouristAttractionController {
 
     @GetMapping("/{name}/tags")
     public String getTagsForAttraction(@PathVariable String name, Model model) {
-        List<Tag> tags = touristAttractionService.getTagsByName(name);
+        System.out.println("### NAME : " + name);
+        List<TagDTO> tags = touristAttractionService.getTagsByName(name);
         model.addAttribute("tags", tags);
         model.addAttribute("name", name);
         return "attractionTags";
     }
-    @GetMapping("/add")
-    public String addAttraction(Model model) {
-        model.addAttribute("activeLink", "add");
-        model.addAttribute("attraction", new TouristAttraction());
-        List<Tag> tags = touristAttractionService.getTags();
-        model.addAttribute("tags",tags);
-        List<City> cities = touristAttractionService.getCities();
-        model.addAttribute("cities",cities);
-
-
-        return "addAttraction";
-    }
-    @PostMapping("/save")
-    public String save(@ModelAttribute TouristAttraction attraction) {
-//        System.out.println("Attraction: " + attraction);
-//        System.out.println(attraction.getTags().size());
-//        System.out.println(attraction.getTags());
-        touristAttractionService.addAttraction(attraction);
-        return "redirect:/attractions";
-    }
+//    @GetMapping("/add")
+//    public String addAttraction(Model model) {
+//        model.addAttribute("activeLink", "add");
+//        model.addAttribute("attraction", new TouristAttraction());
+//        List<Tag> tags = touristAttractionService.getTags();
+//        model.addAttribute("tags",tags);
+//        List<City> cities = touristAttractionService.getCities();
+//        model.addAttribute("cities",cities);
 //
+//
+//        return "addAttraction";
+//    }
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute TouristAttraction attraction) {
+//
+//        touristAttractionService.addAttraction(attraction);
+//        return "redirect:/attractions";
+//    }
+////
     @GetMapping("/{name}/edit")
     public String editAttraction(@PathVariable String name,Model model) {
-        TouristAttraction attraction = touristAttractionService.getAttraction(name);
+        TouristAttractionDTO attraction = touristAttractionService.getAttraction(name);
         model.addAttribute("attraction",attraction);
-        List<Tag> tags = touristAttractionService.getTags();
+        List<TagDTO> tags = touristAttractionService.getTags();
         model.addAttribute("tags",tags);
-        List<City> cities = touristAttractionService.getCities();
+        List<CityDTO> cities = touristAttractionService.getCities();
+        System.out.println("#### CITIES.LENGTH " + cities.size());
+        System.out.println("#### CITIES[0].name " + cities.get(0).getName());
+        System.out.println("#### CITIES[0].id " + cities.get(0).getCity_id());
         model.addAttribute("cities",cities);
         return "editAttraction";
     }
     @PostMapping("/update")
-    public String updateAttraction(@ModelAttribute TouristAttraction attraction) {
-        touristAttractionService.updateAttraction(attraction);
+    public String updateAttraction(@ModelAttribute TouristAttractionDTO attraction) {
+        System.out.println(attraction.getName());
+        System.out.println(attraction.getDescription());
+        System.out.println(attraction.getCity().getName());
+        System.out.println(attraction.getTags().get(0).getName());
+        //touristAttractionService.updateAttraction(attraction);
         return "redirect:/attractions";
     }
-    @GetMapping("/{name}/delete")
-    public String deleteAttraction(@PathVariable String name) {
-        touristAttractionService.deleteAttraction(name);
-        return "redirect:/attractions";
-    }
+//    @GetMapping("/{name}/delete")
+//    public String deleteAttraction(@PathVariable String name) {
+//        touristAttractionService.deleteAttraction(name);
+//        return "redirect:/attractions";
+//    }
 
 }
