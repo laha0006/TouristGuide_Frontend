@@ -6,7 +6,7 @@ import java.util.List;
 public class TouristAttraction {
     private String name;
     private String description;
-    private City city;
+    private String city;
 
     private List<Tag> tags;
 
@@ -14,7 +14,7 @@ public class TouristAttraction {
         //tags = new ArrayList<>();
     }
 
-    public TouristAttraction(String name, String description,City city, List<Tag> tags) {
+    public TouristAttraction(String name, String description,String city, List<Tag> tags) {
         this.name = name;
         this.description = description;
         this.city = city;
@@ -45,11 +45,11 @@ public class TouristAttraction {
         this.tags = tags;
     }
 
-    public City getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
