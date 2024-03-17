@@ -9,6 +9,7 @@
     <header th:insert="fragments/header"></header>
     <div class="bg-dark shadow-lg rounded p-3">
         <form th:action="@{/attractions/update}" th:method="post" th:object="${attraction}" autocomplete="off">
+            <input hidden="hidden" th:field="*{attractionID}"/>
             <div class="form-group">
                 <label for="name" class="form-label">Name</label>
                 <input class="form-control input-dark my-border"
