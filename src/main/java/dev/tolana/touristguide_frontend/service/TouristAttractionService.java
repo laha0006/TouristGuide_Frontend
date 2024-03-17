@@ -19,11 +19,11 @@ public class TouristAttractionService {
     public List<TouristAttractionDTO> getAll() {
         return repository.getAll();
     }
-//
+
     public TouristAttractionDTO getAttraction(String name) {
         return repository.getAttraction(name);
     }
-//
+
     public TouristAttractionDTO addAttraction(TouristAttractionDTO attraction) {
         return repository.addAttraction(attraction);
     }
@@ -31,19 +31,19 @@ public class TouristAttractionService {
     public TouristAttractionDTO updateAttraction(TouristAttractionDTO attraction) {
         return repository.updateAttraction(attraction);
     }
-//
+
 //    public TouristAttraction deleteAttraction(String name) {
 //        return repository.deleteAttraction(name);
 //    }
-//
+
     public List<TagDTO> getTagsByName(String name) {
         return repository.getTagsByName(name);
     }
-//
+
     public List<TagDTO> getTags() {
         return repository.getTags();
     }
-//
+
     public List<CityDTO> getCities() {
         return repository.getCities();
     }
