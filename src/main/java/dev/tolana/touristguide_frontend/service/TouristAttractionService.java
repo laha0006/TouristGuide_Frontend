@@ -24,13 +24,13 @@ public class TouristAttractionService {
         return repository.getAttraction(name);
     }
 //
-//    public TouristAttraction addAttraction(TouristAttraction attraction) {
-//        return repository.addAttraction(attraction);
-//    }
-//
-//    public TouristAttraction updateAttraction(TouristAttraction attraction) {
-//        return repository.updateAttraction(attraction);
-//    }
+    public TouristAttractionDTO addAttraction(TouristAttractionDTO attraction) {
+        return repository.addAttraction(attraction);
+    }
+
+    public TouristAttractionDTO updateAttraction(TouristAttractionDTO attraction) {
+        return repository.updateAttraction(attraction);
+    }
 //
 //    public TouristAttraction deleteAttraction(String name) {
 //        return repository.deleteAttraction(name);

@@ -37,24 +37,24 @@ public class TouristAttractionController {
         model.addAttribute("name", name);
         return "attractionTags";
     }
-//    @GetMapping("/add")
-//    public String addAttraction(Model model) {
-//        model.addAttribute("activeLink", "add");
-//        model.addAttribute("attraction", new TouristAttraction());
-//        List<Tag> tags = touristAttractionService.getTags();
-//        model.addAttribute("tags",tags);
-//        List<City> cities = touristAttractionService.getCities();
-//        model.addAttribute("cities",cities);
-//
-//
-//        return "addAttraction";
-//    }
-//    @PostMapping("/save")
-//    public String save(@ModelAttribute TouristAttraction attraction) {
-//
-//        touristAttractionService.addAttraction(attraction);
-//        return "redirect:/attractions";
-//    }
+    @GetMapping("/add")
+    public String addAttraction(Model model) {
+        model.addAttribute("activeLink", "add");
+        model.addAttribute("attraction", new TouristAttractionDTO());
+        List<TagDTO> tags = touristAttractionService.getTags();
+        model.addAttribute("tags",tags);
+        List<CityDTO> cities = touristAttractionService.getCities();
+        model.addAttribute("cities",cities);
+
+
+        return "addAttraction";
+    }
+    @PostMapping("/save")
+    public String save(@ModelAttribute TouristAttractionDTO attraction) {
+
+        touristAttractionService.addAttraction(attraction);
+        return "redirect:/attractions";
+    }
 ////
     @GetMapping("/{name}/edit")
     public String editAttraction(@PathVariable String name,Model model) {
@@ -71,11 +71,7 @@ public class TouristAttractionController {
     }
     @PostMapping("/update")
     public String updateAttraction(@ModelAttribute TouristAttractionDTO attraction) {
-        System.out.println(attraction.getName());
-        System.out.println(attraction.getDescription());
-        System.out.println(attraction.getCity().getName());
-        System.out.println(attraction.getTags().get(0).getName());
-        //touristAttractionService.updateAttraction(attraction);
+        touristAttractionService.updateAttraction(attraction);
         return "redirect:/attractions";
     }
 //    @GetMapping("/{name}/delete")

@@ -52,4 +52,8 @@ public class TouristAttractionDTO {
     public void setCity(CityDTO city) {
         this.city = city;
     }
+
+    public long getCityId() {
+        return city.getCity_id();
+    }
 }
