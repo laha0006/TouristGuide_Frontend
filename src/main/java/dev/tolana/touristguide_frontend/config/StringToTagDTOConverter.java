@@ -11,7 +11,7 @@ public class StringToTagDTOConverter implements Converter<String, TagDTO> {
 
     @Override
     public TagDTO convert(String source) {
-        System.out.println("#### TAG SOURCE: " + source);
+//        System.out.println("#### TAG SOURCE: " + source);
         TagDTO tagDTO = new TagDTO();
         String[] values = source.split(";");
         String name = values[0];
