@@ -91,10 +91,8 @@ public class TouristAttractionRepository {
         String insertAttractionSQL = """
                 INSERT INTO attraction (name,description,city_id) VALUES(?,?,?)""";
 
-
         int tagCount = attraction.getTags().size();
         String insertAttractionTagsSQL = createAttractionTagsInsertSqlString(tagCount);
-
 
         try (Connection con = dataSource.getConnection()) {
             con.setAutoCommit(false);
@@ -103,10 +101,17 @@ public class TouristAttractionRepository {
             attractionInsertPs.setString(1, attraction.getName());
             attractionInsertPs.setString(2, attraction.getDescription());
             attractionInsertPs.setLong(3, attraction.getCityId());
-
-            int affectedRows = attractionInsertPs.executeUpdate();
-            if (affectedRows != 1) {
-                return new TouristAttractionDTO();
+            try {
+                int affectedRows = attractionInsertPs.executeUpdate();
+                if (affectedRows != 1) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                    return new TouristAttractionDTO();
+                }
+            } catch (SQLException e) {
+                con.rollback();
+                con.setAutoCommit(true);
+                throw new RuntimeException(e);
             }
 
             long attraction_id;
@@ -115,20 +120,29 @@ public class TouristAttractionRepository {
                 attraction_id = keys.getLong(1);
                 attraction.setAttractionID(attraction_id); //set id for return object.
             } else {
+                con.rollback();
+                con.setAutoCommit(true);
                 return new TouristAttractionDTO();
             }
 
             PreparedStatement attractionTagsInsertPs = con.prepareStatement(insertAttractionTagsSQL);
             List<TagDTO> tags = attraction.getTags();
 
-            setTagsPlaceHolderValues(attractionTagsInsertPs,tags,attraction_id);
-
-            int affectedAttractionTagsRows = attractionTagsInsertPs.executeUpdate();
-            if (affectedAttractionTagsRows == tagCount) {
-                con.commit();
+            setTagsPlaceHolderValues(attractionTagsInsertPs, tags, attraction_id);
+            try {
+                int affectedAttractionTagsRows = attractionTagsInsertPs.executeUpdate();
+                if (affectedAttractionTagsRows == tagCount) {
+                    con.commit();
+                    con.setAutoCommit(true);
+                } else {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                    return new TouristAttractionDTO();
+                }
+            } catch (SQLException e) {
+                con.rollback();
                 con.setAutoCommit(true);
-            } else {
-                return new TouristAttractionDTO();
+                throw new RuntimeException(e);
             }
 
         } catch (SQLException e) {
@@ -154,20 +168,20 @@ public class TouristAttractionRepository {
             con.setAutoCommit(false);
 
             PreparedStatement updateAttractionPs = con.prepareStatement(updateAttractionSQL);
-            updateAttractionPs.setString(1,attraction.getDescription());
-            updateAttractionPs.setLong(2,attraction.getCityId());
-            updateAttractionPs.setString(3,attraction.getName());
+            updateAttractionPs.setString(1, attraction.getDescription());
+            updateAttractionPs.setLong(2, attraction.getCityId());
+            updateAttractionPs.setString(3, attraction.getName());
 
             updateAttractionPs.executeUpdate();
 
             PreparedStatement deleteAttractionTagsPs = con.prepareStatement(deleteTagsSQL);
-            deleteAttractionTagsPs.setString(1,attraction.getName());
+            deleteAttractionTagsPs.setString(1, attraction.getName());
             deleteAttractionTagsPs.executeUpdate();
 
             PreparedStatement insertAttractionTagsPs = con.prepareStatement(insertAttractionTagsSQL);
-            setTagsPlaceHolderValues(insertAttractionTagsPs,attraction.getTags(),attraction.getAttractionID());
+            setTagsPlaceHolderValues(insertAttractionTagsPs, attraction.getTags(), attraction.getAttractionID());
             int tagsInsertAffectedRows = insertAttractionTagsPs.executeUpdate();
-            if(tagsInsertAffectedRows == tagCount) {
+            if (tagsInsertAffectedRows == tagCount) {
                 con.commit();
                 con.setAutoCommit(true);
             } else {
@@ -280,6 +294,7 @@ public class TouristAttractionRepository {
             attractionTagsInsertPs.setLong(tagIdParamIndex, tag_id);
         }
     }
+
     private List<TouristAttractionDTO> mapResultSetToTouristAttractionDtoList(ResultSet rs) throws SQLException {
         List<TouristAttractionDTO> attractions = new ArrayList<>();
         TouristAttractionDTO touristAttractionDTO = null;
@@ -308,7 +323,7 @@ public class TouristAttractionRepository {
 
                 attractions.add(touristAttractionDTO);
             } else {
-                if(touristAttractionDTO == null) {
+                if (touristAttractionDTO == null) {
                     throw new RuntimeException("touristAttractionDTO is null, when it shouldn't be.");
                 }
                 TagDTO tagDTO = new TagDTO();
@@ -320,7 +335,6 @@ public class TouristAttractionRepository {
         }
         return attractions;
     }
-
 
 
 }
