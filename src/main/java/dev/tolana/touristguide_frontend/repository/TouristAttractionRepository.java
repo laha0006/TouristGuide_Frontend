@@ -120,14 +120,7 @@ public class TouristAttractionRepository {
 
             PreparedStatement attractionTagsInsertPs = con.prepareStatement(insertAttractionTagsSQL);
             List<TagDTO> tags = attraction.getTags();
-//            for (int i = 0; i < tagCount; i++) {
-//                int attractionIdParamIndex = 1 + (2 * i); // first iteration 1, then 3,5,7...
-//                int tagIdParamIndex = 2 + (2 * i);        // first iteration 2, then 4,6,8...
-//                long tag_id = tags.get(i).getTag_id();
-//
-//                attractionTagsInsertPs.setLong(attractionIdParamIndex, attraction_id);
-//                attractionTagsInsertPs.setLong(tagIdParamIndex, tag_id);
-//            }
+
             setTagsPlaceHolderValues(attractionTagsInsertPs,tags,attraction_id);
 
             int affectedAttractionTagsRows = attractionTagsInsertPs.executeUpdate();
@@ -274,7 +267,9 @@ public class TouristAttractionRepository {
         return insertAttractionTagsSQL;
     }
 
-    private void setTagsPlaceHolderValues(PreparedStatement attractionTagsInsertPs,List<TagDTO> tags,long attraction_id) throws SQLException {
+    private void setTagsPlaceHolderValues(PreparedStatement attractionTagsInsertPs,
+                                          List<TagDTO> tags,
+                                          long attraction_id) throws SQLException {
         int tagCount = tags.size();
         for (int i = 0; i < tagCount; i++) {
             int attractionIdParamIndex = 1 + (2 * i); // first iteration 1, then 3,5,7...
