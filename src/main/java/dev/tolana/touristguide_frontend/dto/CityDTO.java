@@ -34,4 +34,5 @@ public class CityDTO {
 //    public int hashCode() {
 //        return Objects.hash(city_id, name);
 //    }
+
 }

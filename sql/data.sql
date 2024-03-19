@@ -27,3 +27,8 @@ INSERT INTO city (name) VALUES("Præstø");
 INSERT INTO city (name) VALUES("Herning");
 INSERT INTO city (name) VALUES("Agger");
 INSERT INTO city (name) VALUES("Fredericia");
+
+INSERT INTO attraction VALUES("Odense Zoo","Zooooo",3)
+INSERT INTO attraction VALUES("Den Lille Fede","Zooooo",3)
+INSERT INTO attraction VALUES("Osteria NANA","Zooooo",3)
+INSERT INTO attraction VALUES("FIAT","Zooooo",3)

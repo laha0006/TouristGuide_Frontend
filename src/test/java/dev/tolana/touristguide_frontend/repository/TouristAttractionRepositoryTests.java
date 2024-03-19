@@ -1,26 +1,41 @@
-//package dev.tolana.touristguide_frontend.repository;
-//
-//import dev.tolana.touristguide_frontend.model.City;
-//import dev.tolana.touristguide_frontend.model.Tag;
-//import dev.tolana.touristguide_frontend.model.TouristAttraction;
-//import dev.tolana.touristguide_frontend.repository.TouristAttractionRepository;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class TouristAttractionRepositoryTests {
-//
-//    private TouristAttractionRepository repository;
-//
-////    @BeforeEach
-////    public void init() {
-////        repository = new TouristAttractionRepository();
-////    }
-//
+package dev.tolana.touristguide_frontend.repository;
+
+import dev.tolana.touristguide_frontend.dto.TouristAttractionDTO;
+import dev.tolana.touristguide_frontend.model.City;
+import dev.tolana.touristguide_frontend.model.Tag;
+import dev.tolana.touristguide_frontend.model.TouristAttraction;
+import dev.tolana.touristguide_frontend.repository.TouristAttractionRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class TouristAttractionRepositoryTests {
+
+    private TouristAttractionRepository repository;
+
+//    @BeforeEach
+//    public void init() {
+//        repository = new TouristAttractionRepository();
+//    }
+
+    @Autowired
+    TouristAttractionRepository repo;
+    @Test
+    public void testH2() {
+        List<TouristAttractionDTO> attractions = repo.getAll();
+        assertEquals(4,attractions.size());
+    }
+
 //    @Test
 //    public void getAllTest() {
 //        // arrange
@@ -107,5 +122,5 @@
 //        assertTrue(result.contains(Tag.PAID));
 //        assertTrue(result.contains(Tag.FAMILY_FRIENDLY));
 //    }
-//
-//}
+
+}
