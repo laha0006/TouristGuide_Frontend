@@ -14,14 +14,14 @@ import java.util.List;
 @Repository
 public class TouristAttractionRepository {
 
-    @Value("${spring.datasource.url}")
-    private String url;
-
-    @Value("${spring.datasource.username}")
-    private String user;
-
-    @Value("${spring.datasource.password}")
-    private String password;
+//    @Value("${spring.datasource.url}")
+//    private String url;
+//
+//    @Value("${spring.datasource.username}")
+//    private String user;
+//
+//    @Value("${spring.datasource.password}")
+//    private String password;
 
     private final DataSource dataSource;
 

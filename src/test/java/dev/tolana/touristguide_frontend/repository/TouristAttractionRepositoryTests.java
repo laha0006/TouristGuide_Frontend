@@ -16,12 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//replace = AutoConfigureTestDatabase.Replace.NONE
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TouristAttractionRepositoryTests {
 
-    private TouristAttractionRepository repository;
 
 //    @BeforeEach
 //    public void init() {
@@ -35,6 +33,7 @@ public class TouristAttractionRepositoryTests {
         List<TouristAttractionDTO> attractions = repo.getAll();
         assertEquals(4,attractions.size());
     }
+
 
 //    @Test
 //    public void getAllTest() {
