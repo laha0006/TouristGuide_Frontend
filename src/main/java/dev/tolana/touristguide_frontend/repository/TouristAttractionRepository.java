@@ -89,7 +89,8 @@ public class TouristAttractionRepository {
     public TouristAttractionDTO addAttraction(TouristAttractionDTO attraction) {
 
         String insertAttractionSQL = """
-                INSERT INTO attraction (name,description,city_id) VALUES(?,?,?)""";
+                INSERT INTO attraction (name,description,city_id) VALUES(?,?,?)
+                """;
 
         int tagCount = attraction.getTags().size();
         String insertAttractionTagsSQL = createAttractionTagsInsertSqlString(tagCount);
@@ -161,6 +162,7 @@ public class TouristAttractionRepository {
                 DELETE FROM attraction_tags
                 WHERE attraction_id = (SELECT attraction_id FROM attraction WHERE name = ?)
                 """;
+
         int tagCount = attraction.getTags().size();
         String insertAttractionTagsSQL = createAttractionTagsInsertSqlString(tagCount);
 
@@ -180,6 +182,7 @@ public class TouristAttractionRepository {
 
             PreparedStatement insertAttractionTagsPs = con.prepareStatement(insertAttractionTagsSQL);
             setTagsPlaceHolderValues(insertAttractionTagsPs, attraction.getTags(), attraction.getAttractionID());
+
             int tagsInsertAffectedRows = insertAttractionTagsPs.executeUpdate();
             if (tagsInsertAffectedRows == tagCount) {
                 con.commit();
@@ -190,29 +193,64 @@ public class TouristAttractionRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return attraction;
     }
 
-    //    }
-//
-//    public TouristAttraction deleteAttraction(String name) {
-//        String DeleteAttractionTagsSQL = "DELETE\n" +
-//                "FROM attraction_tags\n" +
-//                "WHERE attraction_id = (SELECT attraction_id FROM attraction WHERE name = name)\n";
-//        String DeleteAttractionSQL = "DELETE\n" +
-//                "FROM attraction\n" +
-//                "WHERE attraction_id = (SELECT attraction_id FROM attraction WHERE name = name)";
-//    }
+    public TouristAttractionDTO deleteAttraction(String name) {
+        String deleteAttractionTagsSQL = """
+                DELETE FROM attraction_tags
+                WHERE attraction_id = (SELECT attraction_id FROM attraction WHERE name = ?)
+                """;
+        String deleteAttractionSQL = """
+                DELETE FROM attraction
+                WHERE name = ?
+                """;
+        try (Connection con = dataSource.getConnection()) {
+            con.setAutoCommit(false);
+            PreparedStatement deleteTagsPstmt = con.prepareStatement(deleteAttractionTagsSQL);
+            deleteTagsPstmt.setString(1,name);
+            try {
+                deleteTagsPstmt.executeUpdate();
+            } catch (SQLException e) {
+                con.rollback();
+                con.setAutoCommit(true);
+                throw new RuntimeException(e);
+            }
 
-    //
+            PreparedStatement deleteAttractionPstmt = con.prepareStatement(deleteAttractionSQL);
+            deleteAttractionPstmt.setString(1,name);
+            try {
+                int affectedRows = deleteAttractionPstmt.executeUpdate();
+                if (affectedRows == 1) {
+                    con.commit();
+                    con.setAutoCommit(true);
+                } else {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                    return new TouristAttractionDTO();
+                }
+            } catch (SQLException e) {
+                con.rollback();
+                con.setAutoCommit(true);
+                throw new RuntimeException(e);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return new TouristAttractionDTO();
+    }
+
+
     public List<TagDTO> getTagsByName(String name) {
         List<TagDTO> tags = new ArrayList<>();
-        String SQL = "SELECT name\n" +
-                "FROM attraction_tags\n" +
-                "     JOIN tag\n" +
-                "          ON attraction_tags.tag_id = tag.tag_id\n" +
-                "WHERE attraction_id = (SELECT attraction_id FROM attraction WHERE name = ?);";
+        String SQL = """
+                SELECT name
+                FROM attraction_tags
+                     JOIN tag
+                          ON attraction_tags.tag_id = tag.tag_id
+                WHERE attraction_id = (SELECT attraction_id FROM attraction WHERE name = ?);
+                """;
         try (Connection con = dataSource.getConnection()) {
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, name);
@@ -228,11 +266,10 @@ public class TouristAttractionRepository {
         return tags;
     }
 
-
-    //
     public List<TagDTO> getTags() {
         List<TagDTO> tags = new ArrayList<>();
         String SQL = "SELECT * FROM tag;";
+
         try (Connection con = dataSource.getConnection()) {
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
@@ -251,15 +288,14 @@ public class TouristAttractionRepository {
     public List<CityDTO> getCities() {
         List<CityDTO> cities = new ArrayList<>();
         String SQL = "SELECT * FROM city;";
+
         try (Connection con = dataSource.getConnection()) {
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CityDTO cityDTO = new CityDTO();
-                String cityName = rs.getString("name");
-                long city_id = rs.getLong("city_id");
-                cityDTO.setName(cityName);
-                cityDTO.setCity_id(city_id);
+                cityDTO.setName(rs.getString("name"));
+                cityDTO.setCity_id(rs.getLong("city_id"));
                 cities.add(cityDTO);
             }
         } catch (SQLException e) {
@@ -269,9 +305,12 @@ public class TouristAttractionRepository {
     }
 
 
+    // helper methods
+
     private String createAttractionTagsInsertSqlString(int tagCount) {
         String insertAttractionTagsSQL = """
-                INSERT INTO attraction_tags VALUES(?,?)""";
+                INSERT INTO attraction_tags VALUES(?,?)
+                """;
 
         StringBuilder placeholders = new StringBuilder();
         if (tagCount > 1) {

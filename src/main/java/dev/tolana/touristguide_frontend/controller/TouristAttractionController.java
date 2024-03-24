@@ -74,10 +74,10 @@ public class TouristAttractionController {
         touristAttractionService.updateAttraction(attraction);
         return "redirect:/attractions";
     }
-//    @GetMapping("/{name}/delete")
-//    public String deleteAttraction(@PathVariable String name) {
-//        touristAttractionService.deleteAttraction(name);
-//        return "redirect:/attractions";
-//    }
+    @GetMapping("/{name}/delete")
+    public String deleteAttraction(@PathVariable String name) {
+        touristAttractionService.deleteAttraction(name);
+        return "redirect:/attractions";
+    }
 
 }

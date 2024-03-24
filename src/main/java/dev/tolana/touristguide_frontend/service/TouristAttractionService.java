@@ -32,9 +32,9 @@ public class TouristAttractionService {
         return repository.updateAttraction(attraction);
     }
 
-//    public TouristAttraction deleteAttraction(String name) {
-//        return repository.deleteAttraction(name);
-//    }
+    public TouristAttractionDTO deleteAttraction(String name) {
+        return repository.deleteAttraction(name);
+    }
 
     public List<TagDTO> getTagsByName(String name) {
         return repository.getTagsByName(name);

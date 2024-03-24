@@ -37,24 +37,35 @@ public class TouristAttractionRepositoryTests {
         assertEquals(6,attractions.size());
     }
 
+    @Test
+    public void addAttraction() {
+        TouristAttractionDTO attractionToAdd = new TouristAttractionDTO();
 
-//    @Test
-//    public void AtestAddAndSize() {
-//        TouristAttractionDTO attractionDTO = new TouristAttractionDTO();
-//        CityDTO cityDTO = new CityDTO();
-//        cityDTO.setName("København");
-//        cityDTO.setCity_id(1);
-//        attractionDTO.setCity(cityDTO);
-//        attractionDTO.setDescription("Hello world test");
-//        attractionDTO.setName("TestAttraction");
-//        TagDTO tagDTO = new TagDTO();
-//        tagDTO.setTag_id(2);
-//        tagDTO.setName("Free");
-//        attractionDTO.setTags(List.of(tagDTO));
-//        repo.addAttraction(attractionDTO);
-//        List<TouristAttractionDTO> attractions = repo.getAll();
-//        assertEquals(7,attractions.size());
-//    }
+        CityDTO cityDTO = new CityDTO();
+        cityDTO.setName("København");
+        cityDTO.setCity_id(1);
+
+        attractionToAdd.setCity(cityDTO);
+        attractionToAdd.setDescription("Hello world test");
+        attractionToAdd.setName("TestAttraction");
+
+        TagDTO tagDTO = new TagDTO();
+        tagDTO.setTag_id(2);
+        tagDTO.setName("Free");
+        attractionToAdd.setTags(List.of(tagDTO));
+
+        repo.addAttraction(attractionToAdd);
+
+        List<TouristAttractionDTO> attractions = repo.getAll();
+        TouristAttractionDTO attraction = repo.getAttraction("TestAttraction");
+
+        assertEquals(7,attractions.size()); // 6 original size, so if we add one, we expect 7.
+        assertAll(
+                () -> assertEquals(attractionToAdd.getName(),attraction.getName()),
+                () -> assertEquals(attractionToAdd.getCityId(),attraction.getCityId()),
+                () -> assertEquals(attractionToAdd.getDescription(),attraction.getDescription())
+        );
+    }
 
 
 //    @Test
