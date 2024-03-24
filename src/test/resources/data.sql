@@ -32,3 +32,5 @@ INSERT INTO attraction (name,description,city_id) VALUES('Odense Zoo','Zooooo',3
 INSERT INTO attraction (name,description,city_id) VALUES('Den Lille Fede','Zooooo',3);
 INSERT INTO attraction (name,description,city_id) VALUES('Osteria NANA','Zooooo',3);
 INSERT INTO attraction (name,description,city_id) VALUES('FIAT','Zooooo',3);
+INSERT INTO attraction (name,description,city_id) VALUES('No.2','Foooood',2);
+INSERT INTO attraction (name,description,city_id) VALUES('No.3','Throooood',5);

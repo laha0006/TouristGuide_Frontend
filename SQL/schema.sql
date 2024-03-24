@@ -1,5 +1,10 @@
-# CREATE SCHEMA IF NOT EXISTS tourist_guide;
-# USE tourist_guide;
+CREATE DATABASE IF NOT EXISTS tourist_guide;
+USE tourist_guide;
+
+DROP TABLE IF EXISTS attraction_tags;
+DROP TABLE IF EXISTS attraction;
+DROP TABLE IF EXISTS city;
+DROP TABLE IF EXISTS tag;
 
 CREATE TABLE city (
     city_id INT AUTO_INCREMENT,

@@ -23,7 +23,7 @@ public class TouristAttractionRepository {
 //    @Value("${spring.datasource.password}")
 //    private String password;
 
-    private final DataSource dataSource;
+    private DataSource dataSource;
 
     public TouristAttractionRepository(DataSource dataSource) {
         this.dataSource = dataSource;

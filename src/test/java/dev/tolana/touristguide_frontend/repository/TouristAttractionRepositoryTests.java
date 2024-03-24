@@ -1,38 +1,60 @@
 package dev.tolana.touristguide_frontend.repository;
 
+import dev.tolana.touristguide_frontend.dto.CityDTO;
+import dev.tolana.touristguide_frontend.dto.TagDTO;
 import dev.tolana.touristguide_frontend.dto.TouristAttractionDTO;
-import dev.tolana.touristguide_frontend.model.City;
-import dev.tolana.touristguide_frontend.model.Tag;
-import dev.tolana.touristguide_frontend.model.TouristAttraction;
-import dev.tolana.touristguide_frontend.repository.TouristAttractionRepository;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.List;
-//replace = AutoConfigureTestDatabase.Replace.NONE
+@Testcontainers
 @SpringBootTest
 public class TouristAttractionRepositoryTests {
 
+    @Container
+    @ServiceConnection
+    static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.36").withInitScript("init.sql");
 
-//    @BeforeEach
-//    public void init() {
-//        repository = new TouristAttractionRepository();
-//    }
 
     @Autowired
     TouristAttractionRepository repo;
     @Test
-    public void testH2() {
+    public void getAllTest() {
         List<TouristAttractionDTO> attractions = repo.getAll();
-        assertEquals(4,attractions.size());
+        assertEquals(6,attractions.size());
     }
+
+
+//    @Test
+//    public void AtestAddAndSize() {
+//        TouristAttractionDTO attractionDTO = new TouristAttractionDTO();
+//        CityDTO cityDTO = new CityDTO();
+//        cityDTO.setName("København");
+//        cityDTO.setCity_id(1);
+//        attractionDTO.setCity(cityDTO);
+//        attractionDTO.setDescription("Hello world test");
+//        attractionDTO.setName("TestAttraction");
+//        TagDTO tagDTO = new TagDTO();
+//        tagDTO.setTag_id(2);
+//        tagDTO.setName("Free");
+//        attractionDTO.setTags(List.of(tagDTO));
+//        repo.addAttraction(attractionDTO);
+//        List<TouristAttractionDTO> attractions = repo.getAll();
+//        assertEquals(7,attractions.size());
+//    }
 
 
 //    @Test
